@@ -1,0 +1,55 @@
+{% extends "_base.html" %}
+
+{% block content %}
+
+<div class="starter-template">
+  <h1>Events</h1>
+  <hr><br>
+  <div>
+    <h3>List of events</h3>
+  </div>
+
+  <br><br>
+  <div>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <!-- <th>Start Date</th> -->
+          <th>Created at</th>
+          <th>Last scrape</th>
+          <th>Domains</th>
+          <th>In grata</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody id="events">
+        {% for event in events %}
+        <tr>
+          <td>
+          {% if event['last_time_scraped'] is not none %}
+            <a href="{{url_for('main.events')}}/{{event['id']}}">{{ event['name'] }}</a>
+          {% else %}
+            {{ event['name'] }}
+          {% endif %}
+          </td>
+          <!-- <td>{{ event['start_date'].split()[0] }}</td> -->
+          <td>{{ event['created_at'].split()[0] }}</td>
+          <td>{{ event['last_time_scraped'].split()[0] if event['last_time_scraped'] is not none else ''}}</td>
+          <td>{{ event['total_domains'] }}/{{ event['total_companies'] }}</td>
+          <td>
+            {% if event['in_grata'] %}
+            <a href="https://search.grata.com/lists/{{event['grata_uid']}}/companies" target="_blank">YES</a> 
+            {% else %}
+            NO
+            {% endif %}
+          </td>
+          <td><a href="{{url_for('main.edit_event', event_id = event['id'])}}">Edit</a></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+{% endblock %}

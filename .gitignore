@@ -1,0 +1,11 @@
+*.pyc
+__pycache
+.DS_Store
+/venv
+/project/files
+tasks_tracker.db
+/project/logs
+/project/tests
+/project/__pycache__
+celery.db
+/project/server/events.db

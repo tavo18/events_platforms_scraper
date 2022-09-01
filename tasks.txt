@@ -1,0 +1,18 @@
+Two parts:
+
+Cronjobs based on last-scraped date:
+-----------------------------------------------
+cron jobs (airflow?) with scrapy crawls
+
+criteria: last-scrape date > 1 week, never scraped, not-started events.
+
+Scrapes ad-hoc:
+---------------
+Celery tasks using crawler process.
+Web form to schedule tasks.
+
+Webapp:
+-------
+Form to scrape ad-hoc. 
+Events DB list. 
+Companies' events list. 

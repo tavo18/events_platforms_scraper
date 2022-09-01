@@ -1,0 +1,75 @@
+{% extends "_base.html" %}
+
+{% block content %}
+
+<div class="starter-template">
+  <h1>Edit event</h1>
+  <hr>
+  <a href="{{url_for('main.events')}}">Back</a>
+  <br>
+  <div>
+    <h3>{{event_data['name']}}</h3>
+  </div>
+
+  <br>
+  <div>
+    <form action="{{ url_for('main.update_event') }}" method="post">
+      <input type="hidden" id="event_id" value = "{{event_data['id']}}" name="event_id">
+        <div class="form-group">
+          <label for="event_name" class="form-label">Event name</label>
+          <input type="text" class="form-control" id="event_name" value = "{{event_data['name']}}" placeholder="Event name" name="event_name">
+        </div>
+        <div class="form-group">
+          <label for="event_url" class="form-label">Exhibitors url (from platform)</label>
+          <input type="text" class="form-control" id="event_url" value = "{{event_data['exhibitors_link']}}" placeholder="Event url" name="event_url">
+        </div>
+        <div class="form-group">
+          <label for="event_start_date">Start date</label>
+          <input type="date" id="event_start_date" class="form-control" name="event_start_date" value = "{{event_data['start_date'].split()[0]}}">
+        </div>
+
+        <div class="form-group">
+            <label for="event_end_date">End date</label>
+            <input type="date" id="event_end_date" class="form-control" name="event_end_date" value = "{{event_data['end_date'].split()[0] if event_data['end_date'] is not none else ''}}">
+        </div>
+
+        <div class="form-group">
+          {% if event_data['in_grata'] %}
+            <input type="checkbox" id="in_grata" name="in_grata" onchange="document.getElementById('grata_uid').readOnly = !this.checked;" checked>
+          {% else %}
+            <input type="checkbox" id="in_grata" name="in_grata" onchange="document.getElementById('grata_uid').readOnly = !this.checked;">
+          {% endif %}
+            <label class="form-label" for="in_grata">
+            In grata?
+            </label>
+          {% if event_data['in_grata'] %}
+            <input type="text" class="form-control" id="grata_uid" placeholder="Grata uid" value="{{event_data['grata_uid']}}" name="grata_uid" >
+          {% else %}
+            <input type="text" class="form-control" id="grata_uid" placeholder="Grata uid" name="grata_uid" readonly>
+          {% endif %}
+        </div>
+
+
+
+        <div class="form-group">
+            <label for="event_sector" class="form-label">Sector</label>
+            <input type="text" class="form-control" id="event_sector" placeholder="Event sector" value = "{{event_data['event_sector']}}" name="event_sector">
+        </div>
+
+        <div class="form-group">
+            <label for="event_host" class="form-label">Host</label>
+            <input type="text" class="form-control" id="event_host" placeholder="Event host" value = "{{event_data['event_host']}}" name="event_host">
+        </div>
+
+        <div class="form-group">
+            <label for="event_host" class="form-label">Source link</label>
+            <input type="text" class="form-control" id="event_source" placeholder="Event source link" value = "{{event_data['event_source']}}" name="event_source">
+        </div>
+        
+        
+        <button type="submit" class="btn btn-primary">Update</button>
+      </form>
+  </div>
+</div>
+
+{% endblock %}
